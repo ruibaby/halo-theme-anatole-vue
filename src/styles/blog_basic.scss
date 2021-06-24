@@ -26,15 +26,16 @@
       font-weight: bold;
       text-align: center;
       background-color: #f66;
-      font-family: 'Dosis', 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
+      font-family: "Dosis", "Source Sans Pro", "Helvetica Neue", Arial,
+        sans-serif;
     }
   }
 }
 
 .content {
-  &>.post {
-    &>.post-content {
-      &>p {
+  & > .post {
+    & > .post-content {
+      & > p {
         word-wrap: break-word;
         word-break: break-all;
       }
@@ -44,7 +45,9 @@
 
 pre {
   font-size: 16px;
-  font-family: 'Roboto Mono', 'Lucida Console', 'Trebuchet MS', 'Courier New', Monaco, courier, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft Jhenghei', 'Microsoft YaHei', monospace;
+  font-family: "Roboto Mono", "Lucida Console", "Trebuchet MS", "Courier New",
+    Monaco, courier, "PingFang SC", "Hiragino Sans GB", "Microsoft Jhenghei",
+    "Microsoft YaHei", monospace;
 
   .title {
     color: #83b917;
@@ -266,7 +269,7 @@ blockquote {
     color: #ccc;
 
     &:before {
-      content: '\2014 \00A0';
+      content: "\2014 \00A0";
     }
   }
 

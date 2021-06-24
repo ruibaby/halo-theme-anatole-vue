@@ -1,11 +1,14 @@
 <template>
-  <div class="page-top animated fadeInDown bg-white dark:bg-dark dark:border-black">
+  <div
+    class="page-top animated fadeInDown bg-white dark:bg-dark dark:border-black"
+  >
     <div class="nav">
       <li>
         <router-link
           class="text-black dark:text-darkLink"
-          :to="{name: 'Index'}"
-        >首页</router-link>
+          :to="{ name: 'Index' }"
+          >首页</router-link
+        >
       </li>
     </div>
     <div class="information">
@@ -16,12 +19,11 @@
   </div>
 </template>
 <script>
-import userApi from "@/api/user.js";
 export default {
   name: "PageTop",
   data() {
     return {
-      user: {}
+      user: {},
     };
   },
   created() {
@@ -29,10 +31,10 @@ export default {
   },
   methods: {
     handleGetProfile() {
-      userApi.getProfile().then(response => {
-        this.user = response.data.data;
+      this.$apiClient.user.getProfile().then((response) => {
+        this.user = response.data;
       });
-    }
-  }
+    },
+  },
 };
 </script>

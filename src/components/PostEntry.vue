@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      v-for="(post,index) in posts.content"
+      v-for="(post, index) in list.data"
       class="post animated fadeInDown bg-white dark:bg-dark"
       :key="index"
     >
@@ -11,12 +11,13 @@
             class="text-black dark:text-darkText"
             href="javascript:void(0);"
             @click="handleViewDetail(post.id)"
-          >{{ post.title }}</a>
+            >{{ post.title }}</a
+          >
         </h3>
       </div>
       <div class="post-content">
         <div class="p_part dark:text-darkText">
-          <p>{{post.summary}}...</p>
+          <p>{{ post.summary }}...</p>
         </div>
         <div class="p_part">
           <p></p>
@@ -33,45 +34,45 @@
         </div>
       </div>
     </div>
-    <div
-      class="pagination dark:border-black"
-      v-if="!loading"
-    >
+    <div class="pagination dark:border-black" v-if="!list.loading">
       <ul class="clearfix">
-        <li
-          class="pre pagbuttons"
-          v-if="posts.hasPrevious"
-        >
+        <li class="pre pagbuttons" v-if="list.hasPrevious">
           <a
             @click="handlePrevPage()"
             class="btn"
             role="navigation"
             href="javascript:void(0);"
-          >上一页</a>
+            >上一页</a
+          >
         </li>
-        <li
-          class="next pagbuttons"
-          v-if="posts.hasNext"
-        >
+        <li class="next pagbuttons" v-if="list.hasNext">
           <a
             @click="handleNextPage()"
             class="btn"
             role="navigation"
             href="javascript:void(0);"
-          >下一页</a>
+            >下一页</a
+          >
         </li>
       </ul>
     </div>
   </div>
 </template>
 <script>
-import postApi from "@/api/post.js";
 export default {
   name: "PostEntry",
   data() {
     return {
-      posts: {},
-      loading: false
+      list: {
+        data: [],
+        params: {
+          page: 0,
+          size: 10,
+        },
+        loading: false,
+        hasPrevious: false,
+        hasNext: false,
+      },
     };
   },
   created() {
@@ -79,33 +80,31 @@ export default {
   },
   methods: {
     handleListPosts() {
-      const _this = this;
-      _this.loading = true;
-      _this.posts.content = [];
-      postApi
-        .list({
-          page: _this.posts.page
-        })
-        .then(response => {
-          _this.posts = response.data.data;
+      this.list.loading = true;
+      this.list.data = [];
+      this.$apiClient.post
+        .list(this.list.params)
+        .then((response) => {
+          this.list.data = response.data.content;
+          this.list.params.page = response.data.page;
+          this.list.hasPrevious = response.data.hasPrevious;
+          this.list.hasNext = response.data.hasNext;
         })
         .finally(() => {
-          setTimeout(() => {
-            _this.loading = false;
-          }, 300);
+          this.list.loading = false;
         });
     },
     handleNextPage() {
-      this.posts.page++;
+      this.list.params.page++;
       this.handleListPosts();
     },
     handlePrevPage() {
-      this.posts.page--;
+      this.list.params.page--;
       this.handleListPosts();
     },
     handleViewDetail(id) {
       this.$router.push({ name: "Post", query: { id: id } });
-    }
-  }
+    },
+  },
 };
 </script>

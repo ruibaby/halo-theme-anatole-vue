@@ -20,7 +20,7 @@ export default {
   components: {
     PageTop,
     Sidebar,
-    PostEntry
-  }
+    PostEntry,
+  },
 };
 </script>

@@ -15,8 +15,7 @@
               <div
                 class="post-content dark:text-darkText"
                 v-html="post.formatContent"
-              >
-              </div>
+              ></div>
               <div class="post-footer">
                 <div class="meta">
                   <div class="info">
@@ -56,25 +55,24 @@
   </div>
 </template>
 <script>
-import postApi from "@/api/post.js";
 import PageTop from "@/components/PageTop.vue";
 import Sidebar from "@/components/Sidebar.vue";
 export default {
   name: "Post",
   components: {
     PageTop,
-    Sidebar
+    Sidebar,
   },
   data() {
     return {
-      post: {}
+      post: {},
     };
   },
 
   beforeRouteEnter(to, from, next) {
     // Get post id from query
     const id = to.query.id;
-    next(vm => {
+    next((vm) => {
       if (id) {
         vm.handleGetPost(id);
       }
@@ -82,10 +80,12 @@ export default {
   },
   methods: {
     handleGetPost(id) {
-      postApi.get(id).then(response => {
-        this.post = response.data.data;
-      });
-    }
-  }
+      this.$apiClient.post
+        .getById(id, { formatDisabled: false })
+        .then((response) => {
+          this.post = response.data;
+        });
+    },
+  },
 };
 </script>
